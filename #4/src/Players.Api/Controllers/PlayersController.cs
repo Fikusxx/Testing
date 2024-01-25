@@ -3,6 +3,7 @@ using Players.Application.Players.Queries;
 using Players.Domain.Players.Enums;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Players.Api.Controllers;
 
@@ -36,6 +37,7 @@ public sealed class PlayersController : ControllerBase
 	}
 
 	[HttpPost]
+	[Authorize]
 	public async Task<IActionResult> Post([FromBody] CreatePlayerCommand command)
 	{
 		var result = await mediator.Send(command);	

@@ -1,6 +1,7 @@
 ﻿using Players.Domain.Common.Exceptions;
 using Players.Api.Middlewares;
 using System.Net.Http.Json;
+using FluentAssertions.Execution;
 
 namespace Players.Api.Tests.Integration.PlayersController;
 
@@ -33,6 +34,7 @@ public sealed class CreatePlayersControllerTests : BasePlayersControllerTests
 		var exDetails = await response.Content.ReadFromJsonAsync<ExceptionDetails>();
 
 		// Assert
+		using var _ = new AssertionScope();
 		exDetails.Should().NotBeNull();
 		exDetails!.ErrorType.Should().Be(nameof(DomainException));
 		exDetails!.ErrorMessage.Should().Be("Name should be provided");

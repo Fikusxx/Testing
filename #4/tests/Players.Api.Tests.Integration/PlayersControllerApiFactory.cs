@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication;
+using Players.Api.Tests.Integration.Auth;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
@@ -41,6 +44,9 @@ public sealed class PlayersControllerApiFactory : WebApplicationFactory<IApiMark
 			{
 				options.Connection(postgres.GetConnectionString());
 			});
+
+			services.AddAuthentication("TestScheme")
+			.AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options => { });
 		});
 	}
 

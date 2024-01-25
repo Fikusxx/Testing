@@ -14,6 +14,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.RegisterApplicationServices();
 builder.Services.RegisterInfrastructureServices();
 
+builder.Services.AddAuthentication("TestScheme");
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -22,9 +25,10 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.UseMiddleware<ExceptionMiddleware>();
+
 
 app.MapControllers();
 
